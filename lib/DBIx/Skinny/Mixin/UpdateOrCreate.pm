@@ -23,19 +23,17 @@ sub update_or_create
     my $row;
 
     my $action;
-    if ($itr->count > 1) {
-        Carp::carp "Could not update; Query returned more than one row";
-    }
-    elsif ($itr->count == 1) {
+    if ( $itr->count == 0 ) {
+        $action = "create";
+        %$args = (%$cond, %$args);
+        $row   = $self->insert($table, $args);
+    } elsif ( $itr->count == 1 ) {
         $action = "update";
         $row   = $itr->first;
         %$args = (%$cond, %$args);
         $row->update($args);
-    }
-    else {
-        $action = "create";
-        %$args = (%$cond, %$args);
-        $row   = $self->insert($table, $args);
+    } else {
+        Carp::carp "Could not update; Query returned more than one row";
     }
 
     return wantarray ? ($row, $action) : $row;
