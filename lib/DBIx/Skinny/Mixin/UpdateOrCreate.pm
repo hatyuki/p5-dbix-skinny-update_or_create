@@ -11,7 +11,6 @@ sub register_method
 {
     return {
         update_or_create => \&update_or_create,
-        in_storage       => sub { shift->{in_storage} },
     };
 }
 
@@ -20,8 +19,6 @@ sub update_or_create
     my $self = shift;
     my ($table, $cond, $args) = @_;
 
-    $self->{in_storage} = 0;
-
     my $itr = $self->search($table, $cond);
     my $row;
 
@@ -29,7 +26,6 @@ sub update_or_create
         Carp::carp "Could not update; Query returned more than one row";
     }
     elsif ($itr->count == 1) {
-        $self->{in_storage} = 1;
         $row   = $itr->first;
         %$args = (%$cond, %$args);
         $row->update($args);
