@@ -5,12 +5,13 @@ use Test::More;
 use Mock::Model;
 
 
-Mock::Model->setup;
 
 for my $model ( Mock::Model->new, "Mock::Model" ) {
     subtest $model => sub {
+        $model->setup;
+
         do {
-            my $row = $model->update_or_create(
+            my ($row, $action) = $model->update_or_create(
                 mock => { id => 1 }, { name => 'replace' }
             );
         
@@ -20,7 +21,7 @@ for my $model ( Mock::Model->new, "Mock::Model" ) {
                 name    => 'replace',
                 comment => 'comment1',
             };
-            ok $model->in_storage;
+            is($action, "update");
         };
         
         do {
@@ -33,7 +34,6 @@ for my $model ( Mock::Model->new, "Mock::Model" ) {
                 name    => 'replace',
                 comment => 'foo',
             };
-            ok $model->in_storage;
         };
         
         do {
@@ -46,11 +46,10 @@ for my $model ( Mock::Model->new, "Mock::Model" ) {
                 name    => 'name2',
                 comment => 'comment2',
             };
-            ok $model->in_storage;
         };
         
         do {
-            my $row = $model->update_or_create(
+            my ($row, $action) = $model->update_or_create(
                 mock => { id => 10 }, { name => 'name10', comment => 'comment10' }
             );
         
@@ -59,7 +58,7 @@ for my $model ( Mock::Model->new, "Mock::Model" ) {
                 name    => 'name10',
                 comment => 'comment10',
             };
-            ok !$model->in_storage;
+            is($action, "create");
         };
         
         do {
@@ -72,7 +71,6 @@ for my $model ( Mock::Model->new, "Mock::Model" ) {
                 name    => 'duplicate',
                 comment => 'baz',
             };
-            ok $model->in_storage;
         };
         
         do {
