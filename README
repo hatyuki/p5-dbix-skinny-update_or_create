@@ -13,16 +13,21 @@ SYNOPSIS
       my $args = { name => 'hatyuki' };  # insert or update value
       my $row  = Proj::DB->update_or_create('TableName', $cond, $args);
 
+      # in case that you want what action was executed.
+      my ($row, $action) = Proj::DB->update_or_create('TableName', $cond, $args);
+      if ( $acition eq 'create' ) {
+        # do something.
+      } elsif ( $acition eq 'update' ) {
+      }
 
 DESCRIPTION
-    DBIx::Skinny::Pager is 
+    DBIx::Skinny::Mixin::UpdateOrCreate is
 
 AUTHOR
     hatyuki
 
 SEE ALSO
-    +<DBIx::Skinny>, +<DBIx::Skinny::Mixin>
-
 LICENSE
-    This library is free software; you can redistribute it and/or modify
-    it under the same terms as Perl itself.
+    This library is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+
