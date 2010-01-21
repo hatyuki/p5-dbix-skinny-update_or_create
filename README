@@ -1,27 +1,28 @@
-This is Perl module DBIx::Skinny::Mixin::UpdateOrCreate.
+NAME
+    DBIx::Skinny::Mixin::UpdateOrCreate -
 
-INSTALLATION
+SYNOPSIS
+      package Proj::DB;
+      use DBIx::Skinny;
+      use DBIx::Skinny::Mixin modules => [qw/ UpdateOrCreate /];
 
-DBIx::Skinny::Mixin::UpdateOrCreate installation is straightforward. If your CPAN shell is set up,
-you should just be able to do
+      package main;
+      use Proj::DB;
 
-    % cpan DBIx::Skinny::Mixin::UpdateOrCreate
+      my $cond = { id   => 1 };          # update conditions
+      my $args = { name => 'hatyuki' };  # insert or update value
+      my $row  = Proj::DB->update_or_create('TableName', $cond, $args);
 
-Download it, unpack it, then build it as per the usual:
 
-    % perl Makefile.PL
-    % make && make test
+DESCRIPTION
+    DBIx::Skinny::Pager is 
 
-Then install it:
+AUTHOR
+    hatyuki
 
-    % make install
+SEE ALSO
+    +<DBIx::Skinny>, +<DBIx::Skinny::Mixin>
 
-DOCUMENTATION
-
-DBIx::Skinny::Mixin::UpdateOrCreate documentation is available as in POD. So you can do:
-
-    % perldoc DBIx::Skinny::Mixin::UpdateOrCreate
-
-to read the documentation online with your favorite pager.
-
-hatyuki
+LICENSE
+    This library is free software; you can redistribute it and/or modify
+    it under the same terms as Perl itself.

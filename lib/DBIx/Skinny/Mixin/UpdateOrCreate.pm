@@ -51,7 +51,16 @@ DBIx::Skinny::Mixin::UpdateOrCreate -
 
 =head1 SYNOPSIS
 
-  use DBIx::Skinny::Mixin::UpdateOrCreate;
+  package Proj::DB;
+  use DBIx::Skinny;
+  use DBIx::Skinny::Mixin modules => [qw/ UpdateOrCreate /];
+
+  package main;
+  use Proj::DB;
+
+  my $cond = { id   => 1 };          # update conditions
+  my $args = { name => 'hatyuki' };  # insert or update value
+  my $row  = Proj::DB->update_or_create('TableName', $cond, $args);
 
 =head1 DESCRIPTION
 
@@ -59,7 +68,7 @@ DBIx::Skinny::Mixin::UpdateOrCreate is
 
 =head1 AUTHOR
 
-hatyuki E<lt>hatyuki@apps.magicalhat.jpE<gt>
+hatyuki
 
 =head1 SEE ALSO
 

@@ -1,11 +1,13 @@
 use inc::Module::Install;
+
 name 'DBIx-Skinny-Mixin-UpdateOrCreate';
 all_from 'lib/DBIx/Skinny/Mixin/UpdateOrCreate.pm';
 
-# requires '';
+requires 'DBIx::Skinny';
+requires 'Carp';
 
 tests 't/*.t';
-author_tests 'xt';
+# author_tests 'xt';
 
 build_requires 'Test::More';
 use_test_base;
